@@ -71,9 +71,7 @@ class ControladorAdmin{
         $id=$_GET['id'];
         $buscar=(Portafolio::buscarAbout($id));
         include_once("vistas/about/editarAbout.php");
-    }
-
-    
+    }   
 
     public function about(){
         $abouts= Portafolio::consultarAbout();
@@ -294,15 +292,83 @@ class ControladorAdmin{
     }
 
 // *-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*
+// Controlador tabla portfolio
+
+// Consultar registros de la tabla portfolio
+    public function inicioPortfolio(){
+
+        $busquedas=Portfolio::consultarPortfolio();
+        include_once("vistas/portfolio/inicioPortfolio.php");
+
+    }
+
+// Insertar registros en la tabla portfolio
+    public function crearPortfolio(){
+
+        if (isset($_POST['crear_portfolio'])) {
+
+            $desc_port=$_POST['desc_port'];
+            $montajes=$_FILES['montajes']['name'];
+            $marketing=$_FILES['marketing']['name'];
+            $fantasia=$_FILES['fantasia']['name'];          
+
+            Portfolio::crearPortfolio($desc_port,$montajes,$marketing,$fantasia);
+            header("Location:?controlador=admin&accion=inicioPortfolio");
+            
+        }
+
+        include_once("vistas/portfolio/crearPortfolio.php");
+
+    }
+
+// Borrar registros en la tabla portfolio
+    public function borrarPortfolio(){
+
+        if (isset($_GET['id'])) {
+    
+            $id=$_GET['id'];
+            Portfolio::borrarPortfolio($id);
+            header("Location:?controlador=admin&accion=inicioPortfolio");
+
+        }
+
+    }
+
+// Editar datos de la tabla portfolio
+    public function editarPortfolio(){
+
+        if (isset($_POST['editar_portfolio'])) {
+
+            $id=$_POST['id'];
+            $desc_port=$_POST['desc_port'];
+            $montajes=$_POST['montajes'];
+            $marketing=$_POST['marketing'];
+            $fantasia=$_POST['fantasia'];
+
+            Portfolio::editarPortfolio($id,$desc_port,$montajes,$marketing,$fantasia); 
+            header("Location:?controlador=admin&accion=inicioPortfolio");
+            
+        }
+
+        $id=$_GET['id'];
+        $busca=(Portfolio::buscarPortfolio($id));
+
+        include_once("vistas/portfolio/editarPortfolio.php");
+
+    }
 
     public function portfolio(){
 
-        include_once("vistas/portfolio.php");
+        include_once("vistas/portfolio/portfolio.php");
         
     }
 
-/* *-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*
-            CRUD de la tabla services           */
+    public function portfolio_details(){
+        include_once("vistas/portfolio/portfolio-details.php");
+    }
+
+// *-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*
+// Controlador de la tabla services           
 
     // Consultas a la tabla services 
     public function inicioServices(){
@@ -366,13 +432,20 @@ class ControladorAdmin{
         
     }
 
-    // *-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*
+// *-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*
 
     public function contact(){
 
-        include_once("vistas/contact.php");
+        include_once("vistas/contact/contact.php");
         
     }
+
+// *-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*
+// Controlador de controladores(Valga la redundancia)
+
+public function inicioAdmin(){
+    include_once("vistas/admin/administracion.php");
+}
 
 }
 

@@ -1,5 +1,5 @@
 <?php
-//Tabla about
+// CRUD Tabla about
 
 class Portafolio{
 
@@ -80,8 +80,8 @@ class Portafolio{
     }
 
 }
-
-// Tabla resumes
+// *---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*
+// CRUD Tabla resumes
 
 class PortafolioResume{
     public $id;
@@ -153,6 +153,7 @@ class PortafolioResume{
 }
 
 // *---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*
+// CRUD Tabla education_resume
 
 class EducationResume{
 
@@ -225,6 +226,7 @@ class EducationResume{
 }
 
 // *---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*
+// CRUD Tabla experience_resume
 
 class ExperienceResume{
 
@@ -302,6 +304,9 @@ class ExperienceResume{
 
 }
 
+// *---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*
+// CRUD Tabla services
+
 class Services{
 
     public $id;
@@ -357,7 +362,6 @@ class Services{
         $busca=$sql->fetch();
 
         return new Services($busca['id'],$busca['description_services'],$busca['name_services'],$busca['resume_services']);
-
         
     }
 
@@ -368,7 +372,81 @@ class Services{
         $sql=$conexionBD->prepare("UPDATE services SET description_services=?, name_services=?, resume_services=? WHERE id=?");
 
         $sql->execute(array($description_services,$name_services,$resume_services,$id));
+        
+    }
 
+}
+
+// *---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*
+// CRUD Tabla portfolio
+
+class Portfolio{
+
+    public $id;
+    public $desc_port;
+    public $montajes;
+    public $marketing;
+    public $fantasia;
+
+    public function __construct($id,$desc_port,$montajes,$marketing,$fantasia){
+        
+        $this->id=$id;
+        $this->desc_port=$desc_port;
+        $this->montajes=$montajes;
+        $this->marketing=$marketing;
+        $this->fantasia=$fantasia;
+
+    }
+
+    public function consultarPortfolio(){
+
+        $listaImages=[];
+        $conexionBD=BD::crearInstancia();
+        $sql=$conexionBD->query("SELECT * FROM portfolio");
+
+        foreach ($sql->fetchAll() as $experience) {
+            $listaImages[]=new Portfolio($experience['id'],$experience['desc_port'],$experience['montajes'],$experience['marketing'],$experience['fantasia']);
+        }
+
+        return $listaImages;
+
+    }
+
+    public function crearPortfolio($desc_port,$montajes,$marketing,$fantasia){
+
+        $conexionBD=BD::crearInstancia();
+        $sql=$conexionBD->prepare("INSERT INTO portfolio(desc_port,montajes,marketing,fantasia) VALUES(?,?,?,?)");
+        $sql->execute(array($desc_port,$montajes,$marketing,$fantasia));
+
+
+    }
+
+    public function borrarPortfolio($id){
+
+        $conexionBD=BD::crearInstancia();
+        $sql=$conexionBD->prepare("DELETE FROM portfolio WHERE id=?");
+        $sql->execute(array($id));
+
+    }
+
+    public function buscarPortfolio($id){
+
+        $conexionBD=BD::crearInstancia();
+        $sql=$conexionBD->prepare("SELECT * FROM portfolio WHERE id=?");
+        $sql->execute(array($id));
+        $busca=$sql->fetch();
+
+        return new Portfolio($busca['id'],$busca['desc_port'],$busca['montajes'],$busca['marketing'],$busca['fantasia']);
+
+    }
+
+    public function editarPortfolio($id,$desc_port,$montajes,$marketing,$fantasia){
+
+        $conexionBD=BD::crearInstancia();
+
+        $sql=$conexionBD->prepare("UPDATE portfolio SET desc_port=?, montajes=?, marketing=?, fantasia=? WHERE id=?");
+
+        $sql->execute(array($desc_port,$montajes,$marketing,$fantasia,$id));
         
     }
 
