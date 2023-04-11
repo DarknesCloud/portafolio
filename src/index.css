@@ -17,6 +17,7 @@
   --text-color: #535964;
   --circle-one: #1100ff;
   --circle-two: #00b9ff;
+  --circle-three: ;
 }
 
 /* font styles */
@@ -127,4 +128,40 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.circle {
+  border-radius: 50%;
+  opacity: 0.25;
+  -webkit-filter: blur(80px);
+  filter: blur(80px);
+  position: absolute;
+  z-index: -2;
+}
+
+.section_title {
+  position: relative;
+  font-size: var(--h2-font-size);
+  color: var(--first-color);
+  margin-top: var(--mb-2);
+  margin-bottom: var(--mb-4);
+  text-align: center;
+}
+
+.section_title::after {
+  position: absolute;
+  content: '';
+  width: 64px;
+  height: 0.18rem;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 2rem;
+  background: var(--first-color);
+}
+
+.section {
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  position: relative;
 }
