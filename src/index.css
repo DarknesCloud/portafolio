@@ -123,6 +123,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  margin: var(--header-height);
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  color: var(--second-color);
 }
 
 code {

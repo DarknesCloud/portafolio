@@ -40,6 +40,26 @@ export const Home = () => {
         <img src={Star1} className="star1" />
         <img src={Star2} className="star2" />
         <img src={Star3} className="star3" />
+
+        <div className="box box1">
+          <div className="imgBox">
+            <img src="{Smiley}" alt="" />
+          </div>
+          <div className="contentBox">
+            <h2>Ui/Ux</h2>
+            <p>Type some content over here</p>
+          </div>
+        </div>
+
+        <div className="box box1">
+          <div className="imgBox">
+            <img src="{Smiley}" alt="" />
+          </div>
+          <div className="contentBox">
+            <h2>Ui/Ux</h2>
+            <p>Type some content over here</p>
+          </div>
+        </div>
       </div>
     </section>
   );
